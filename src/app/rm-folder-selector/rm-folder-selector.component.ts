@@ -50,11 +50,11 @@ export class RmFolderSelectorComponent implements OnInit, OnDestroy {
   updateChildrenSelection(selectedItem: Folder){
     const isSelected = selectedItem.isActive;
     if (selectedItem.subFolder && !isSelected) {
-      for (const subfolder of selectedItem.subFolder) {
-        subfolder.isActive = isSelected;
-        subfolder.isInderminate = isSelected;
-        this.updateChildrenSelection(subfolder);
-      }
+          selectedItem.subFolder.forEach((subfolder) => {
+           subfolder.isActive = isSelected;
+           subfolder.isInderminate = isSelected;
+           this.updateChildrenSelection(subfolder);
+        });
     }
   }
 
