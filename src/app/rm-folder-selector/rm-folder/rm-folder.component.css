@@ -29,6 +29,7 @@
     padding-left: 12px;
     display: flex;
     align-items: center; 
+    cursor: pointer;
 }
 
 .rm-fs-item-toggle-btn{
