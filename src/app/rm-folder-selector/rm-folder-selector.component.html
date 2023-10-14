@@ -1,0 +1,23 @@
+<div class="rm-fs-container" *ngIf="data">
+    <ng-container
+      *ngTemplateOutlet="Recursion; context:{ folders: data}"
+    ></ng-container>
+</div>
+
+<ng-template #Recursion let-folders="folders">
+    <div *ngFor="let folder of folders">
+            <rm-folder [folderData] = "folder" 
+              (resetSelectionEvent)="resetSelection(data)"
+              (updateParentSelectionEvent)="updateParentSelection(folder)"
+              (updateChildrenSelectionEvent)="updateChildrenSelection(folder)"/>
+      
+      <div *ngIf="folder.isCollapsed">
+        <div *ngIf="folder?.subFolder.length > 0">
+            <ng-container
+              *ngTemplateOutlet="Recursion; context:{ folders: folder.subFolder }"
+            ></ng-container>
+        </div>
+      </div>        
+    </div>
+</ng-template>
+    

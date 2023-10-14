@@ -1,0 +1,12 @@
+.rm-fs-container {
+    display: flex;
+    flex-direction: column;
+    margin: 10vh;
+    border: 1px solid hsl(210, 0%, 89%);
+    border-radius: 5px;
+    font-family: sans-serif;
+    height: auto;
+    overflow-y: auto;
+    max-height: 75vh;
+}
+
