@@ -11,12 +11,12 @@
     justify-content: center;
 }
 
-.rm-fs-item-checkbox{
+.rm-fs-item-checkbox {
     display: flex;
     align-items: center; 
 }
 
-.rm-fs-checkbox{
+.rm-fs-checkbox {
     height: 16px;
     width: 16px;
     border: 2px solid hsl(210, 0%, 89%);
@@ -24,7 +24,7 @@
     cursor: pointer;
 }
 
-.rm-fs-item-span{
+.rm-fs-item-span {
     flex: 1 1 0;
     padding-left: 12px;
     display: flex;
@@ -32,12 +32,12 @@
     cursor: pointer;
 }
 
-.rm-fs-item-toggle-btn{
+.rm-fs-item-toggle-btn {
     display: flex;
     align-items: center; 
 }
 
-.root-toggle-btn{
+.root-toggle-btn {
     border: none;
     background: none;
     color: hsl(195, 3%, 24% );

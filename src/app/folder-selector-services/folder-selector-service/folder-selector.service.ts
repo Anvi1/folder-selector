@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FolderSelectorApiService } from '../api-service/folder-selector-api.service';
 import { Folder, FolderSelectorRawDataType, FolderSelectorResponse } from '../../folder-selector-interfaces/folder-selector-items';
-import { Observable, map } from 'rxjs';
+import { Observable, catchError, map } from 'rxjs';
 import { filterDataWithNoNames, filterDate, sortDataWithNames } from 'src/app/folder-selector-utils/folder-selector-utils';
 
 @Injectable({
@@ -18,6 +18,10 @@ export class FolderSelectorService {
               sortDataWithNames(response.data);
               return this.mapData(response.data);
         }),
+      catchError((error: any) => {
+        console.error('An error occurred:', error);
+        return [];
+      })
     );
   }
   
