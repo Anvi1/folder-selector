@@ -16,22 +16,6 @@
     align-items: center; 
 }
 
-.rm-fs-checkbox {
-    height: 16px;
-    width: 16px;
-    border: 2px solid hsl(210, 0%, 89%);
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.rm-fs-item-span {
-    flex: 1 1 0;
-    padding-left: 12px;
-    display: flex;
-    align-items: center; 
-    cursor: pointer;
-}
-
 .rm-fs-item-toggle-btn {
     display: flex;
     align-items: center; 

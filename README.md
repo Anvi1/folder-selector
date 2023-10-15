@@ -30,6 +30,8 @@
 
 7. Performs session storage of data to cache it session wise, making API calls as minimum as possible since the data is static and not changeable. 
 
+8. After "Including SubFolders" option is enabled, sub-folders will also be checked/unchecked based on the action of parent folder. Enabling "Including Subfolder" option will not change the state of current selection but will affect the future actions performed on parent folders.
+
 
 ## Development server
 

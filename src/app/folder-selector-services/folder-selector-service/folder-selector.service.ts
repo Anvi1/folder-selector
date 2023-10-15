@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FolderSelectorApiService } from '../api-service/folder-selector-api.service';
 import { Folder, FolderSelectorRawDataType, FolderSelectorResponse } from '../../folder-selector-interfaces/folder-selector-items';
-import { Observable, catchError, map } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { filterDataWithNoNames, filterDate, sortDataWithNames } from 'src/app/folder-selector-utils/folder-selector-utils';
 
 @Injectable({
@@ -14,7 +14,6 @@ export class FolderSelectorService {
   getMappedData(): Observable<Folder[]> {
     return this.apiService.fetchData().pipe(
       map((response: FolderSelectorResponse) => this.processResponseData(response.data)),
-      catchError(this.handleError)
     );
   }
 
@@ -22,11 +21,6 @@ export class FolderSelectorService {
     const filteredData = filterDataWithNoNames(responseData); // Filter out items with empty names
     const sortedData = sortDataWithNames(filteredData); // Sort by the "name" property
     return this.mapData(sortedData);
-  }
-
-  private handleError(error: any) {
-    console.error('An error occurred:', error);
-    return [];
   }
   
   mapData(responseData: FolderSelectorRawDataType[] , parentId: number | null = null, depth: number = 0): Folder[] {

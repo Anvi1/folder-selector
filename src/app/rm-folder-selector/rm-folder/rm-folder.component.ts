@@ -15,8 +15,7 @@ export class RmFolderComponent {
 
   @Input() folderData!: Folder;
   @Output() resetSelectionEvent = new EventEmitter();
-  @Output() updateParentSelectionEvent = new EventEmitter<Folder>();
-  @Output() updateChildrenSelectionEvent = new EventEmitter<Folder>();
+  @Output() updateSelectionEvent = new EventEmitter<Folder>();
 
   /**
  * Clear selected/activated folders and select/activate clicked folder when user clicks area other than toggle & checkbox.
@@ -24,14 +23,12 @@ export class RmFolderComponent {
   clearAllSelectionAndSelectClickedFolder(selectedItem: Folder){
     this.resetSelectionEvent.emit();
     selectedItem.isActive = true;
-    this.updateParentSelectionEvent.emit(selectedItem);
+    this.updateSelectionEvent.emit(selectedItem);
   }
 
   onFolderSelectorCheckBoxChange(selectedItem: Folder) {
-      selectedItem.isActive = !selectedItem.isActive;
-      selectedItem.isInderminate = false;
-      this.updateChildrenSelectionEvent.emit(selectedItem);
-      this.updateParentSelectionEvent.emit(selectedItem);
+    selectedItem.isActive = !selectedItem.isActive;
+    this.updateSelectionEvent.emit(selectedItem);
   }
 
 }

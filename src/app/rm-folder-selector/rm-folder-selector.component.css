@@ -10,3 +10,17 @@
     max-height: 75vh;
 }
 
+.rm-including-sub-folder{
+    height: 6vh;
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: center;
+}
+
+.rm-fs-including-sub-folder-checkbox{
+    display: flex;
+    align-items: center;
+}
+

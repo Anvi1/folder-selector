@@ -1,4 +1,19 @@
-<div class="rm-fs-container" *ngIf="data">
+<div *ngIf="displayError">
+  Something went wrong! Please check network!
+</div>
+<div class="rm-fs-container" *ngIf="!displayError">
+  <div class="rm-including-sub-folder">
+    <div class="rm-fs-including-sub-folder-checkbox">
+        <input type="checkbox" 
+               class="rm-fs-checkbox" 
+               (change)="includeSubFolders()" 
+               [checked]="includeSubFoldersCheck" 
+                />
+    </div>
+    <div class="rm-fs-span">
+        <span>Including Subfolders</span>
+    </div>
+  </div>
     <ng-container
       *ngTemplateOutlet="Recursion; context:{ folders: data}"
     ></ng-container>
@@ -8,8 +23,7 @@
     <div *ngFor="let folder of folders">
             <rm-folder [folderData] = "folder" 
               (resetSelectionEvent)="resetSelection(data)"
-              (updateParentSelectionEvent)="updateParentSelection(folder)"
-              (updateChildrenSelectionEvent)="updateChildrenSelection(folder)"/>
+              (updateSelectionEvent)="updateCurrentSelection(folder)"/>
       
       <div *ngIf="folder.isCollapsed">
         <div *ngIf="folder?.subFolder.length > 0">

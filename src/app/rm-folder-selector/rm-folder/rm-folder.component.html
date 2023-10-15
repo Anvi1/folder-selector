@@ -6,7 +6,7 @@
                [indeterminate]="folderData.isInderminate"
                (change)="onFolderSelectorCheckBoxChange(folderData)" />
     </div>
-    <div class="rm-fs-item-span" (click)="clearAllSelectionAndSelectClickedFolder(folderData)">
+    <div class="rm-fs-span" (click)="clearAllSelectionAndSelectClickedFolder(folderData)">
         <span>{{folderData.name}}</span>
     </div>
     <div class="rm-fs-item-toggle-btn" *ngIf="folderData.subFolder && folderData.subFolder?.length">
