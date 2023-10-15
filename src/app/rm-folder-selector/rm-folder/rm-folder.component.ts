@@ -18,8 +18,6 @@ export class RmFolderComponent {
   @Output() updateParentSelectionEvent = new EventEmitter<Folder>();
   @Output() updateChildrenSelectionEvent = new EventEmitter<Folder>();
 
-  data: Folder[] = [];
-
   /**
  * Clear selected/activated folders and select/activate clicked folder when user clicks area other than toggle & checkbox.
  */

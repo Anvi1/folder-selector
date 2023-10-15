@@ -11,8 +11,7 @@
     </div>
     <div class="rm-fs-item-toggle-btn" *ngIf="folderData.subFolder && folderData.subFolder?.length">
         <button class="root-toggle-btn" (click)="folderData.isCollapsed = !folderData.isCollapsed"> 
-            <i *ngIf="!folderData.isCollapsed" class="fa fa-chevron-down"></i>
-            <i *ngIf="folderData.isCollapsed" class="fa fa-chevron-up"></i>
+            <i class="fa" [ngClass]="{'fa-chevron-up': folderData.isCollapsed, 'fa-chevron-down': !folderData.isCollapsed}"></i>
         </button>
     </div>
 </div>

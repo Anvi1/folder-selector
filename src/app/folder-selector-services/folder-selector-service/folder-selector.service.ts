@@ -13,19 +13,26 @@ export class FolderSelectorService {
 
   getMappedData(): Observable<Folder[]> {
     return this.apiService.fetchData().pipe(
-      map((response: FolderSelectorResponse) => {
-              response.data = filterDataWithNoNames(response.data);
-              sortDataWithNames(response.data);
-              return this.mapData(response.data);
-        }),
-      catchError((error: any) => {
-        console.error('An error occurred:', error);
-        return [];
-      })
+      map((response: FolderSelectorResponse) => this.processResponseData(response.data)),
+      catchError(this.handleError)
     );
   }
+
+  private processResponseData(responseData: FolderSelectorRawDataType[]): Folder[] {
+    const filteredData = filterDataWithNoNames(responseData); // Filter out items with empty names
+    const sortedData = sortDataWithNames(filteredData); // Sort by the "name" property
+    return this.mapData(sortedData);
+  }
+
+  private handleError(error: any) {
+    console.error('An error occurred:', error);
+    return [];
+  }
   
-  mapData(responseData: FolderSelectorRawDataType[] , parentId: number | null = null): Folder[] {
+  mapData(responseData: FolderSelectorRawDataType[] , parentId: number | null = null, depth: number = 0): Folder[] {
+    if (depth >= 5) { // Added a constraint to set level till which level of subfolder to see data
+      return [];
+    }
     return responseData
       .filter(item =>  item[2] === parentId)
       .map(item => {
@@ -44,7 +51,7 @@ export class FolderSelectorService {
           isActive: false,
           isCollapsed: collapsible,
           isInderminate: false,
-          subFolder: this.mapData(responseData, id),
+          subFolder: this.mapData(responseData, id, depth + 1),
           padding:''
         };
       });

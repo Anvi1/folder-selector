@@ -1,6 +1,3 @@
-<div *ngIf="!data">
-  "An error is occured, please check your network!!"
-</div>
 <div class="rm-fs-container" *ngIf="data">
     <ng-container
       *ngTemplateOutlet="Recursion; context:{ folders: data}"
