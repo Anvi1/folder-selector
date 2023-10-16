@@ -1,17 +1,15 @@
 <div class="rm-fs-item" [ngStyle]="{'padding-left': folderData.padding }">
     <div class="rm-fs-item-checkbox">
-        <input type="checkbox" 
-               class="rm-fs-checkbox"  
-               [checked]="folderData.isActive" 
-               [indeterminate]="folderData.isInderminate"
-               (change)="onFolderSelectorCheckBoxChange(folderData)" />
+        <input type="checkbox" class="rm-fs-checkbox" [checked]="folderData.isActive"
+            [indeterminate]="folderData.isInderminate" (change)="onFolderSelectorCheckBoxChange(folderData)" />
     </div>
     <div class="rm-fs-span" (click)="clearAllSelectionAndSelectClickedFolder(folderData)">
         <span>{{folderData.name}}</span>
     </div>
     <div class="rm-fs-item-toggle-btn" *ngIf="folderData.subFolder && folderData.subFolder?.length">
-        <button class="root-toggle-btn" (click)="folderData.isCollapsed = !folderData.isCollapsed"> 
-            <i class="fa" [ngClass]="{'fa-chevron-up': folderData.isCollapsed, 'fa-chevron-down': !folderData.isCollapsed}"></i>
+        <button class="root-toggle-btn" (click)="folderData.isCollapsed = !folderData.isCollapsed">
+            <i class="fa"
+                [ngClass]="{'fa-chevron-up': folderData.isCollapsed, 'fa-chevron-down': !folderData.isCollapsed}"></i>
         </button>
     </div>
 </div>

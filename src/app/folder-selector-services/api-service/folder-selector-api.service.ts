@@ -8,9 +8,9 @@ import { FolderSelectorResponse } from '../../folder-selector-interfaces/folder-
 })
 export class FolderSelectorApiService {
 
-  private apiUrl = 'assets/response.json'; 
+  private apiUrl = 'assets/response.json';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   fetchData(): Observable<FolderSelectorResponse> {
     return this.http.get<FolderSelectorResponse>(this.apiUrl);

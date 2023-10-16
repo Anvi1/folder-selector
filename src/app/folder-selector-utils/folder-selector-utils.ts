@@ -25,14 +25,14 @@ export function fillEmptyNames(data: FolderSelectorRawDataType[]) {
 
 function missingNodeVersion(arr: number[]) {
   const missingNumbers: number[] = [];
-  const sortedArr = arr.sort((a, b) => a - b); 
+  const sortedArr = arr.sort((a, b) => a - b);
 
   if (sortedArr.length === 0) {
-    return 1 ; 
+    return 1;
   }
 
-  const min = sortedArr[0]; 
-  const max = sortedArr[sortedArr.length - 1]; 
+  const min = sortedArr[0];
+  const max = sortedArr[sortedArr.length - 1];
 
   for (let num = min; num <= max; num++) {
     if (sortedArr.indexOf(num) === -1) {
@@ -62,7 +62,7 @@ function groupSameParentValues(arrays: any[], valueToGroupBy: number | null) {
 
 export function sortDataWithNames(dataToSort: FolderSelectorRawDataType[]) {
   dataToSort.sort((a, b) => {
-      return b[1].localeCompare(a[1]);
+    return b[1].localeCompare(a[1]);
   });
   return dataToSort;
 }

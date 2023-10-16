@@ -7,9 +7,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Folder } from '../../folder-selector-interfaces/folder-selector-items';
 
 @Component({
-selector: 'rm-folder',
-templateUrl: './rm-folder.component.html',
-styleUrls: ['./rm-folder.component.css']
+  selector: 'rm-folder',
+  templateUrl: './rm-folder.component.html',
+  styleUrls: ['./rm-folder.component.css']
 })
 export class RmFolderComponent {
 
@@ -20,7 +20,7 @@ export class RmFolderComponent {
   /**
  * Clear selected/activated folders and select/activate clicked folder when user clicks area other than toggle & checkbox.
  */
-  clearAllSelectionAndSelectClickedFolder(selectedItem: Folder){
+  clearAllSelectionAndSelectClickedFolder(selectedItem: Folder) {
     this.resetSelectionEvent.emit();
     selectedItem.isActive = true;
     this.updateSelectionEvent.emit(selectedItem);

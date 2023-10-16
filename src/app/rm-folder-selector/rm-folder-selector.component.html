@@ -4,34 +4,24 @@
 <div class="rm-fs-container" *ngIf="!displayError">
   <div class="rm-including-sub-folder">
     <div class="rm-fs-including-sub-folder-checkbox">
-        <input type="checkbox" 
-               class="rm-fs-checkbox" 
-               (change)="includeSubFolders()" 
-               [checked]="includeSubFoldersCheck" 
-                />
+      <input type="checkbox" class="rm-fs-checkbox" (change)="includeSubFolders()" [checked]="includeSubFoldersCheck" />
     </div>
     <div class="rm-fs-span">
-        <span>Including Subfolders</span>
+      <span>Including Subfolders</span>
     </div>
   </div>
-    <ng-container
-      *ngTemplateOutlet="Recursion; context:{ folders: data}"
-    ></ng-container>
+  <ng-container *ngTemplateOutlet="Recursion; context:{ folders: data}"></ng-container>
 </div>
 
 <ng-template #Recursion let-folders="folders">
-    <div *ngFor="let folder of folders">
-            <rm-folder [folderData] = "folder" 
-              (resetSelectionEvent)="resetSelection(data)"
-              (updateSelectionEvent)="updateCurrentSelection(folder)"/>
-      
-      <div *ngIf="folder.isCollapsed">
-        <div *ngIf="folder?.subFolder.length > 0">
-            <ng-container
-              *ngTemplateOutlet="Recursion; context:{ folders: folder.subFolder }"
-            ></ng-container>
-        </div>
-      </div>        
+  <div *ngFor="let folder of folders">
+    <rm-folder [folderData]="folder" (resetSelectionEvent)="resetSelection(data)"
+      (updateSelectionEvent)="updateCurrentSelection(folder)" />
+
+    <div *ngIf="folder.isCollapsed">
+      <div *ngIf="folder?.subFolder.length > 0">
+        <ng-container *ngTemplateOutlet="Recursion; context:{ folders: folder.subFolder }"></ng-container>
+      </div>
     </div>
+  </div>
 </ng-template>
-    

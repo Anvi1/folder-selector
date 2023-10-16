@@ -22,19 +22,19 @@ export class FolderSelectorService {
     console.log(filteredData);
     return this.mapData(filteredData);
   }
-  
-  mapData(responseData: FolderSelectorRawDataType[] , parentId: number | null = null, depth: number = 0): Folder[] {
+
+  mapData(responseData: FolderSelectorRawDataType[], parentId: number | null = null, depth: number = 0): Folder[] {
     if (depth >= 5) { // Added a constraint to set level till which level of subfolder to see data
       return [];
     }
     return responseData
-      .filter(item =>  item[2] === parentId)
+      .filter(item => item[2] === parentId)
       .map(item => {
         const id = item[0];
         const name = item[1];
         const parent = item[2];
         const created = item[3];
-        
+
         const collapsible = filterDate(item[3]);
 
         return {
@@ -46,9 +46,9 @@ export class FolderSelectorService {
           isCollapsed: collapsible,
           isInderminate: false,
           subFolder: this.mapData(responseData, id, depth + 1),
-          padding:''
+          padding: ''
         };
       });
   }
-  
+
 }

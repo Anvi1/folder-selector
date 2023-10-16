@@ -16,42 +16,42 @@ import { addPaddingToData, findFolderById } from '../folder-selector-utils/folde
 })
 export class RmFolderSelectorComponent implements OnInit, OnDestroy {
 
-  public data!: Folder[]; 
+  public data!: Folder[];
   public storedData = sessionStorage.getItem('folderSelectorData'); // Holds previously stored data from sessionStorage.
 
   getFolderSelectorDataSubscription: Subscription = new Subscription;
   includeSubFoldersCheck: boolean = false;
   displayError: boolean = false;
 
-  constructor(private folderSelectorService: FolderSelectorService){
+  constructor(private folderSelectorService: FolderSelectorService) {
   }
-  
+
   ngOnInit() {
     /*** Fetching folder selector data during component initialization*/
-    this.getFolderSelectorData();  
+    this.getFolderSelectorData();
   }
 
   getFolderSelectorData() {
     if (this.storedData) {
       const parsedData = JSON.parse(this.storedData);
-      this.data = parsedData;   
+      this.data = parsedData;
     }
-    else{
+    else {
       this.getFolderSelectorDataSubscription = this.folderSelectorService.getMappedData()
-      .pipe(
-        catchError((error) => {
-          console.error('An error occurred:', error);
-          this.displayError = true;
-          return [];
-        })
-      )
-      .subscribe(mappedData => {
-        this.data = mappedData;
+        .pipe(
+          catchError((error) => {
+            console.error('An error occurred:', error);
+            this.displayError = true;
+            return [];
+          })
+        )
+        .subscribe(mappedData => {
+          this.data = mappedData;
           this.displayError = false;
           addPaddingToData(mappedData);
           sessionStorage.setItem('folderSelectorData', JSON.stringify(mappedData));
         }
-      );
+        );
     }
   }
 
@@ -59,14 +59,14 @@ export class RmFolderSelectorComponent implements OnInit, OnDestroy {
     this.includeSubFoldersCheck = !this.includeSubFoldersCheck;
   }
 
-  checkAnyChildrenSelected(folder: Folder) : boolean {
+  checkAnyChildrenSelected(folder: Folder): boolean {
     return folder?.subFolder.some((child: any) => (child.isActive || child.isInderminate));
   }
 
-  
- /**
- * Handles changes in current folder selection, Parent & Child Selections.
- */
+
+  /**
+  * Handles changes in current folder selection, Parent & Child Selections.
+  */
   updateCurrentSelection(selectedItem: Folder) {
     const anyChildrenSelected = this.checkAnyChildrenSelected(selectedItem);
     selectedItem.isInderminate = (anyChildrenSelected && !selectedItem.isActive && !this.includeSubFoldersCheck) ? true : false;
@@ -78,15 +78,15 @@ export class RmFolderSelectorComponent implements OnInit, OnDestroy {
   /**
   * Handles changes in folder selection and updates child folders accordingly.
   */
-  updateChildrenSelection(selectedItem: Folder){
+  updateChildrenSelection(selectedItem: Folder) {
     const isSelected = selectedItem.isActive;
     if (selectedItem.subFolder && this.includeSubFoldersCheck) {
-          selectedItem.subFolder.forEach((subfolder) => {
-           subfolder.isActive = isSelected;
-           subfolder.isInderminate = false;
-           this.updateChildrenSelection(subfolder);
-        });
-     }
+      selectedItem.subFolder.forEach((subfolder) => {
+        subfolder.isActive = isSelected;
+        subfolder.isInderminate = false;
+        this.updateChildrenSelection(subfolder);
+      });
+    }
   }
 
 
@@ -103,10 +103,10 @@ export class RmFolderSelectorComponent implements OnInit, OnDestroy {
       }
     }
   }
-  
-   /**
-  * Resets data when user clicks area other than toggle & checkbox.
-  */
+
+  /**
+ * Resets data when user clicks area other than toggle & checkbox.
+ */
   resetSelection(data: Folder[]) {
     for (const item of data) {
       item.isActive = false;
