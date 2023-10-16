@@ -2,28 +2,58 @@
 
 import { Folder, FolderSelectorRawDataType } from "../folder-selector-interfaces/folder-selector-items";
 
-export function fillEmptyNames(data: FolderSelectorRawDataType[]) {
-  data.forEach((item) => {
-    if (item[1] === "") {
-      const allVersions = groupSameParentValues(data, item[2]);
-      const stableVersions = allVersions.filter((item) => item !== "");
-      const lastCharactersArray: number[] = stableVersions.map((item) => parseInt(item.slice(-1), 10));
-      const missingVersionVal = missingNodeVersion(lastCharactersArray);
+const dateToCompare = '2023-05-01T00:00:00+00:00';
 
-      if (item[2] === null) {
-        item[1] = 'Node ' + missingVersionVal;
-      } else {
-        const getMajorVersion = data.find((folder) => folder[0] === item[2]);
-        const missingVersion = getMajorVersion ? getMajorVersion[1] + '.' + missingVersionVal : 'Node x';
-        item[1] = missingVersion;
-      }
-    }
-  });
-
+export function filterData(data: FolderSelectorRawDataType[]) {
+  filterNames(data);
   return sortDataWithNames(data);
 }
 
-function missingNodeVersion(arr: number[]) {
+function filterNames(data: FolderSelectorRawDataType[]) {
+  data.forEach((item, index) => {
+    item[2] = convertParentToNumber(item[2]);
+    if (item[1] === "") {
+      if (item[2] === null) {
+        item[1] = getMissingParentVersion(data, item);
+      } else {
+        getMissingChildVersion(data, item, index);
+      }
+    }
+  });
+}
+
+function getMissingParentVersion(data: FolderSelectorRawDataType[], item: FolderSelectorRawDataType) {
+  const missingVersionVal = getMissingNodeVersion(data, item);
+  const getMinorVersion = data.find((folder) => folder[2] === item[0]);
+  const missingVersion = getMinorVersion ? getMissingMajorVersion(getMinorVersion[1]) : 'Node ' + missingVersionVal;
+  return missingVersion;
+}
+
+function getMissingChildVersion(data: FolderSelectorRawDataType[], item: FolderSelectorRawDataType, index: number) {
+  const missingVersionVal = getMissingNodeVersion(data, item);
+  let getMajorVersion = data.find((folder) => folder[0] === item[2]);
+  let getMajorVersionName = getMajorVersion ? getMajorVersion[1] : '';
+  if(getMajorVersion && !getMajorVersion[1]){
+    getMajorVersionName = getMissingParentVersion(data, getMajorVersion);
+  }
+  const missingVersion = getMajorVersion ? getMajorVersionName + '.' + missingVersionVal : 'Node ' + missingVersionVal;
+  data[index][1] = missingVersion;
+}
+
+function getMissingNodeVersion (data:FolderSelectorRawDataType[], item: FolderSelectorRawDataType){
+  const allVersions = groupSameParentValues(data, item[2]);
+  const stableVersions = allVersions.filter((item) => item !== "");
+  const lastCharactersArray: number[] = stableVersions.map((item) => parseInt(item.slice(-1), 10));
+  return missingNodeVersionVal(lastCharactersArray);
+
+}
+
+function getMissingMajorVersion(getMinorVersion: string) {
+  const lastDotIndex = getMinorVersion.lastIndexOf('.');
+  return getMinorVersion.slice(0, lastDotIndex);
+}
+
+function missingNodeVersionVal(arr: number[]) {
   const missingNumbers: number[] = [];
   const sortedArr = arr.sort((a, b) => a - b);
 
@@ -46,7 +76,7 @@ function missingNodeVersion(arr: number[]) {
     return highestValue + 1;
   }
 
-  return missingNumbers;
+  return 0;
 }
 
 function groupSameParentValues(arrays: any[], valueToGroupBy: number | null) {
@@ -59,7 +89,6 @@ function groupSameParentValues(arrays: any[], valueToGroupBy: number | null) {
   return groupedValues;
 }
 
-
 export function sortDataWithNames(dataToSort: FolderSelectorRawDataType[]) {
   dataToSort.sort((a, b) => {
     return b[1].localeCompare(a[1]);
@@ -67,8 +96,14 @@ export function sortDataWithNames(dataToSort: FolderSelectorRawDataType[]) {
   return dataToSort;
 }
 
+function convertParentToNumber(item: any) {
+  return item !== null && !isNaN(item) ? parseFloat(item) : null;
+}
+
 export function filterDate(dataCreatedData: string) {
-  const dateToCompareFrom = new Date('2023-05-01T00:00:00+00:00');
+  const dateToCompareFrom = new Date(dateToCompare);
+  // Check if date is empty and if empty fill it with date to compare
+  dataCreatedData = !dataCreatedData ? dateToCompare : dataCreatedData;
   const createdDate = new Date(dataCreatedData);
   return createdDate < dateToCompareFrom;
 }
