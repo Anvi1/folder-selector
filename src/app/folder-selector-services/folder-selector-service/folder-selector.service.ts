@@ -19,7 +19,6 @@ export class FolderSelectorService {
 
   private processResponseData(responseData: FolderSelectorRawDataType[]): Folder[] {
     const filteredData = fillEmptyNames(responseData); // Filter out items with empty names
-    console.log(filteredData);
     return this.mapData(filteredData);
   }
 
