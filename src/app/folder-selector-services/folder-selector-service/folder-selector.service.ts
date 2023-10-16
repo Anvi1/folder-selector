@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { FolderSelectorApiService } from '../api-service/folder-selector-api.service';
 import { Folder, FolderSelectorRawDataType, FolderSelectorResponse } from '../../folder-selector-interfaces/folder-selector-items';
 import { Observable, map } from 'rxjs';
-import { filterDataWithNoNames, filterDate, sortDataWithNames } from 'src/app/folder-selector-utils/folder-selector-utils';
+import { fillEmptyNames, filterDate } from 'src/app/folder-selector-utils/folder-selector-utils';
 
 @Injectable({
   providedIn: 'root'
@@ -18,9 +18,9 @@ export class FolderSelectorService {
   }
 
   private processResponseData(responseData: FolderSelectorRawDataType[]): Folder[] {
-    const filteredData = filterDataWithNoNames(responseData); // Filter out items with empty names
-    const sortedData = sortDataWithNames(filteredData); // Sort by the "name" property
-    return this.mapData(sortedData);
+    const filteredData = fillEmptyNames(responseData); // Filter out items with empty names
+    console.log(filteredData);
+    return this.mapData(filteredData);
   }
   
   mapData(responseData: FolderSelectorRawDataType[] , parentId: number | null = null, depth: number = 0): Folder[] {

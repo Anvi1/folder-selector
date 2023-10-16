@@ -26,7 +26,7 @@
 
 5. Shows an indeterminate state if parent folder/folders are inactive and subfolder is activated.
 
-6. List is sorted by Names in descending order. Empty folder names were removed from the list displayed before sorting.   
+6. List is sorted by Names in descending order. Empty folder names were updated with the possible missing versions from the siblings list.   
 
 7. Performs session storage of data to cache it session wise, making API calls as minimum as possible since the data is static and not changeable. 
 

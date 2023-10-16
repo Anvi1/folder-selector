@@ -30,6 +30,6 @@ export interface Folder {
     isInderminate?: boolean;
     subFolder: Folder[];
     padding: string;
-} 
+}
 
 

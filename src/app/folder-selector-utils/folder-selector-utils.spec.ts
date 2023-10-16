@@ -1,21 +1,5 @@
-import { filterDataWithNoNames, filterDate, sortDataWithNames } from './folder-selector-utils';
+import { filterDate, sortDataWithNames } from './folder-selector-utils';
 import { FolderSelectorRawDataType } from '../folder-selector-interfaces/folder-selector-items';
-
-describe('filterDataWithNoNames', () => {
-  it('should filter out items with no names', () => {
-    const dataToFilter: FolderSelectorRawDataType[] = [
-      [1, "Name 1", null, "12"],
-      [2, "", null, "12"],
-      [3, "Name 3", null, "12"],
-      [4, "", null, "12"]
-    ];
-    const filteredData = filterDataWithNoNames(dataToFilter);
-    expect(filteredData).toEqual([
-      [1, "Name 1", null, "12"],
-      [3, "Name 3", null, "12"]
-    ]);
-  });
-});
 
 describe('sortDataWithNames', () => {
   it('should sort data with names in descending order', () => {
