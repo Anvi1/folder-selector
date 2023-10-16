@@ -7,7 +7,7 @@
 
 3. npm version 9.4.0
 
-4. Run `npm install` to download node modules. 
+4. Run `npm install` inside root directory to download node modules. 
 
 5. Additional package is installed for using Font awesome icons locally. This is used for installing fa icon used as toggle button in application. Dependency is added in package.json. If this somehow throws error while 'npm install' because of version issues, then remove it from package.json, remove import from styles.css, do 'npm install' wihout it and to access fa icons uncomment line number 9 in index.html file. index.html file includes font-awesome style sheet source link, so internet connection is required to access the icon in this case.
 
